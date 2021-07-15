@@ -3,10 +3,7 @@ document.addEventListener('DOMContentLoaded', function () {
       el: '#app',
       data: {
           errorMessage: null,
-            toDoList: [
-                { text: 'Tarefa 01', completed: false },
-                { text: 'Tarefa 02', completed: true }
-            ],
+            toDoList: [],
             toDo: ''
         },
         methods: {
@@ -18,6 +15,13 @@ document.addEventListener('DOMContentLoaded', function () {
                 }
                 this.toDoList.push({text: this.toDo, completed: false})
                 this.toDo = ''
+            },
+            complete(toDo) {
+                this.$set(toDo, 'completed', true)
+            },
+            remove(toDo) {
+                const index = this.toDoList.indexOf(toDo)
+                this.toDoList.splice(index, 1)
             }
         }
     })

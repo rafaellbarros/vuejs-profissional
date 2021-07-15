@@ -22,10 +22,10 @@
         <div class="to-do-list">
           <ol>
             <li v-for="td in toDoList" :key="td.text">
-              <span class="text">{{ td.text }}</span>
+              <span class="text" :class="{'completed' : td.completed }">{{ td.text }}</span>
               <span class="actions">
-                <button class="complete">&#10004;</button>
-                <button class="remove">&#10006;</button>
+                <button class="complete" v-if="!td.completed" @click="complete(td)">&#10004;</button>
+                <button class="remove" @click="remove(td)">&#10006;</button>
               </span> 
             </li>
           </ol>
