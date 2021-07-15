@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <script src="js/script.js"></script>
+    <script src="js/vue.min.js"></script>
+</head>
+<body>
+    <div id="app">
+        <h1>To Do List</h1>
+        <div class="form">
+          <form>
+            <input type="text" placeholder="Entre com uma tafefa...">
+            <button>Enviar</button>
+          </form>
+          <p class="error-message">Mensagem de error</p>
+        </div>
+        <div class="to-do-list">
+          <ol>
+            <li>
+              <span class="text">Tarefa 01</span>
+              <span class="actions">
+                <button class="complete">&#10004;</button>
+                <button class="remove">&#10006;</button>
+              </span> 
+            </li>
+          </ol>
+        </div>
+      </div>  
+</body>
+</html>
