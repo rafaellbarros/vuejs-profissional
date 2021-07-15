@@ -13,11 +13,11 @@
     <div id="app">
         <h1>To Do List</h1>
         <div class="form">
-           <form> 
+           <form @submit.prevent="save()"> 
                 <input type="text" placeholder="Entre com uma tafefa..." v-model="toDo">
-                <button @click="save()">Enviar</button>
+                <button type="submit">Enviar</button>
             </form>
-          <p class="error-message">Mensagem de error</p>
+          <p class="error-message" v-show="errorMessage">{{ errorMessage }}</p>
         </div>
         <div class="to-do-list">
           <ol>
