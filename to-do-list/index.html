@@ -14,7 +14,7 @@
         <h1>To Do List</h1>
         <div class="form">
            <form @submit.prevent="save()"> 
-                <input type="text" placeholder="Entre com uma tafefa..." v-model="toDo">
+                <input type="text" placeholder="Entre com uma tafefa..." v-model="toDo" ref="toDoInput">
                 <button type="submit">Enviar</button>
             </form>
           <p class="error-message" v-show="errorMessage">{{ errorMessage }}</p>

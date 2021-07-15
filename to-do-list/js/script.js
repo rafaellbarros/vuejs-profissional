@@ -23,6 +23,12 @@ document.addEventListener('DOMContentLoaded', function () {
                 const index = this.toDoList.indexOf(toDo)
                 this.toDoList.splice(index, 1)
             }
+        },
+        mounted() {
+            this.$refs.toDoInput.focus()
+        },
+        updated() {
+            this.$refs.toDoInput.focus()
         }
     })
 })
