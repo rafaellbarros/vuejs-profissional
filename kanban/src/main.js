@@ -1,6 +1,7 @@
-const appTemplate = document.querySelector('#app')
+import Vue from 'vue'
+import App from './App.vue'
 
-const h1 = document.createElement('h1')
-h1.appendChild(document.createTextNode('Olá Mundo!'))
-
-appTemplate.appendChild(h1);
+new Vue({
+    el: '#app',
+    render: h => h(App)
+})
