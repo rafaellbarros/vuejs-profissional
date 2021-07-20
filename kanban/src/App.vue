@@ -4,68 +4,47 @@
     <hr />
 
     <Form v-on:saveToDo="save"></Form>
-    
+
     <div class="lists">
-      <div class="list" id="toDo">
-        <h2>To Do List</h2>
-        <div class="to-do-list">
-          <ol>
-            <li v-for="td in toDoList" :key="td.text">
-              <span class="text" :class="{ completed: td.completed }">{{
-                td.text
-              }}</span>
-              <span class="actions">
-                <button class="remove" @click="remove(td, toDoList)">&#10006;</button>
-                <button class="next" @click="next(td, toDoList, inProgressList)">&#10095;</button>
-              </span>
-            </li>
-          </ol>
-        </div>
-      </div>
+      <List
+        :list="toDoList"
+        title="To Do"
+        :nextList="inProgressList"
+        @removeTask="remove"
+        @nextStage="next"
+        bgColor="#ffaaaa"
+      >
+      </List>
 
-      <div class="list" id="inProgress">
-        <h2>In Progress</h2>
-        <div class="to-do-list">
-          <ol>
-            <li v-for="td in inProgressList" :key="td.text">
-              <span class="text" :class="{ completed: td.completed }">{{
-                td.text
-              }}</span>
-              <span class="actions">
-                <button class="remove" @click="remove(td, inProgressList)">&#10006;</button>
-                <button class="next" @click="next(td, inProgressList, doneList)">&#10095;</button>
-              </span>
-            </li>
-          </ol>
-        </div>
-      </div>
+      <List
+        :list="inProgressList"
+        title="In Progress"
+        :nextList="doneList"
+        @removeTask="remove"
+        @nextStage="next"
+        bgColor="#fff9aa"
+      >
+      </List>
 
-      <div class="list" id="done">
-        <h2>Done</h2>
-        <div class="to-do-list">
-          <ol>
-            <li v-for="td in doneList" :key="td.text">
-              <span class="text" :class="{ completed: td.completed }">{{
-                td.text
-              }}</span>
-              <span class="actions">
-                <button class="remove" @click="remove(td, doneList)">&#10006;</button>
-              </span>
-            </li>
-          </ol>
-        </div>
-      </div>
+      <List
+        :list="doneList"
+        title="Done"
+        @removeTask="remove"
+        bgColor="#aaffb8"
+      >
+      </List>
     </div>
   </div>
 </template>
 
 <script>
-
-import Form from './Form.vue'
+import Form from "./Form.vue";
+import List from "./List.vue";
 
 export default {
   components: {
-    Form
+    Form,
+    List,
   },
   data() {
     return {
@@ -79,15 +58,14 @@ export default {
       this.toDoList.push({ text: toDo, completed: false });
     },
     next(toDo, from, to) {
-      // this.$set(toDo, "completed", true);
-      to.push(toDo)
-      this.remove(toDo, from)
+      to.push(toDo);
+      this.remove(toDo, from);
     },
     remove(toDo, list) {
       const index = list.indexOf(toDo);
       list.splice(index, 1);
     },
-  }
+  },
 };
 </script>
 
@@ -121,99 +99,12 @@ body {
   height: 100%;
 }
 
-.list {
-  min-width: 31%;
-  margin: 0 1%;
-  padding: 10px;
-  background-color: #f0f0f0;
-  border-radius: 3px;
-  overflow-y: auto;
-}
-
-.list:first-child {
-  margin-left: 0;
-}
-
-.list:last-child {
-  margin-right: 0;
-}
-
-hr  {
+hr {
   margin-bottom: 10px;
   border: 1px solid #cccccc;
 }
 
 h1 {
   text-align: center;
-}
-
-#toDo {
-  background-color: #ffaaaa;
-}
-
-#inProgress {
-  background-color: #fff9aa;
-}
-
-#done {
-  background-color: #aaffb8;
-}
-
-.to-do-list ol {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-.to-do-list ol li {
-  padding: 5px;
-  margin-top: 5px;
-  border: 1px solid #5300d8;
-  box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.2); 
-  display: flex;
-  justify-content: space-between;
-}
-
-.to-do-list ol li .text {
-  max-width: calc(100% - 60px);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.to-do-list ol li .text.completed {
-  text-decoration: line-through;
-}
-
-.to-do-list ol li .actions {
-  width: 45px;
-  display: flex;
-  vertical-align: middle;
-  height: 100%;
-  justify-content: flex-end;
-}
-
-.to-do-list ol li .actions button {
-  width: 20px;
-  padding: 2px;
-  height: 20px;
-  line-height: 15px;
-  border-radius: 10px;
-  font-size: 11px;
-  border: 1px solid #79ad7c;
-  background-color: transparent;
-  cursor: pointer;
-}
-
-.to-do-list ol li .actions button.next {
-  margin-left: 5px;
-  color: #229966;
-  border: 1px solid #229966;
-}
-
-.to-do-list ol li .actions button.remove {
-  color: #992222;
-  border: 1px solid #992222;
-  cursor: pointer;
 }
 </style>
