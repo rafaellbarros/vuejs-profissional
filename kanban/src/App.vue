@@ -2,18 +2,9 @@
   <div id="app">
     <h1>Kaban</h1>
     <hr />
-    <div class="form">
-      <form @submit.prevent="save()">
-        <input
-          type="text"
-          placeholder="Entre com uma nova tafefa..."
-          v-model="toDo"
-          ref="toDoInput"
-        />
-        <button type="submit">Enviar</button>
-      </form>
-      <p class="error-message" v-show="errorMessage">{{ errorMessage }}</p>
-    </div>
+
+    <Form v-on:saveToDo="save"></Form>
+    
     <div class="lists">
       <div class="list" id="toDo">
         <h2>To Do List</h2>
@@ -69,25 +60,23 @@
 </template>
 
 <script>
+
+import Form from './Form.vue'
+
 export default {
+  components: {
+    Form
+  },
   data() {
     return {
-      errorMessage: null,
       toDoList: [],
       inProgressList: [],
       doneList: [],
-      toDo: "",
     };
   },
   methods: {
-    save() {
-      this.errorMessage = null;
-      if (!this.toDo) {
-        this.errorMessage = "Digite o texto da tarefa!";
-        return;
-      }
-      this.toDoList.push({ text: this.toDo, completed: false });
-      this.toDo = "";
+    save(toDo) {
+      this.toDoList.push({ text: toDo, completed: false });
     },
     next(toDo, from, to) {
       // this.$set(toDo, "completed", true);
@@ -98,13 +87,7 @@ export default {
       const index = list.indexOf(toDo);
       list.splice(index, 1);
     },
-  },
-  mounted() {
-    this.$refs.toDoInput.focus();
-  },
-  updated() {
-    this.$refs.toDoInput.focus();
-  },
+  }
 };
 </script>
 
@@ -162,46 +145,6 @@ hr  {
 
 h1 {
   text-align: center;
-}
-
-.form {
-  flex-shrink: 0;
-  width: 100%;
-}
-
-
-form {
-  width: 100%;
-  display: flex;
-  border-radius: 3px;
-  margin-bottom: 10px;
-}
-
-
-form input {
-  width: 90%;
-  border: 0;
-  padding: 10px;
-  border-top-left-radius: 3px;
-  border-bottom-left-radius: 3px;
-}
-
-form button {
-  width: 10%;
-  border: 0;
-  background-color: #5300d8;
-  color: #ffffff;
-  border-top-right-radius: 3px;
-  border-bottom-right-radius: 3px;
-}
-
-.error-message {
-  margin-bottom: 10px;
-  color: red;
-  padding: 3px;
-  background-color: #ffaaaa;
-  border-radius: 3px;
-  font-size: 0.8em;
 }
 
 #toDo {
