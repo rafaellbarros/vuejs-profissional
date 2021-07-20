@@ -6,7 +6,7 @@
       <form @submit.prevent="save()">
         <input
           type="text"
-          placeholder="Entre com uma tafefa..."
+          placeholder="Entre com uma nova tafefa..."
           v-model="toDo"
           ref="toDoInput"
         />
@@ -24,8 +24,8 @@
                 td.text
               }}</span>
               <span class="actions">
-                <button class="remove" @click="remove(td)">&#10006;</button>
-                <button class="next" @click="next(td)">&#10095;</button>
+                <button class="remove" @click="remove(td, toDoList)">&#10006;</button>
+                <button class="next" @click="next(td, toDoList, inProgressList)">&#10095;</button>
               </span>
             </li>
           </ol>
@@ -41,8 +41,8 @@
                 td.text
               }}</span>
               <span class="actions">
-                <button class="remove" @click="remove(td)">&#10006;</button>
-                <button class="next" @click="next(td)">&#10095;</button>
+                <button class="remove" @click="remove(td, inProgressList)">&#10006;</button>
+                <button class="next" @click="next(td, inProgressList, doneList)">&#10095;</button>
               </span>
             </li>
           </ol>
@@ -58,8 +58,7 @@
                 td.text
               }}</span>
               <span class="actions">
-                <button class="remove" @click="remove(td)">&#10006;</button>
-                <button class="next" @click="next(td)">&#10095;</button>
+                <button class="remove" @click="remove(td, doneList)">&#10006;</button>
               </span>
             </li>
           </ol>
@@ -90,12 +89,14 @@ export default {
       this.toDoList.push({ text: this.toDo, completed: false });
       this.toDo = "";
     },
-    next(toDo) {
-      this.$set(toDo, "completed", true);
+    next(toDo, from, to) {
+      // this.$set(toDo, "completed", true);
+      to.push(toDo)
+      this.remove(toDo, from)
     },
-    remove(toDo) {
-      const index = this.toDoList.indexOf(toDo);
-      this.toDoList.splice(index, 1);
+    remove(toDo, list) {
+      const index = list.indexOf(toDo);
+      list.splice(index, 1);
     },
   },
   mounted() {
@@ -115,13 +116,15 @@ export default {
 }
 
 body {
-  background-color: #d3d3d3;
+  background-color: #f7f7f7;
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   color: #5300d8;
 }
 
 #app {
   width: 100vw;
+  max-width: 960px;
+  margin: 0 auto;
   height: calc(100vh - 20px);
   padding: 20px 10px;
   display: flex;
@@ -154,7 +157,7 @@ body {
 
 hr  {
   margin-bottom: 10px;
-  border: 1px solid #e6d6ff;
+  border: 1px solid #cccccc;
 }
 
 h1 {
@@ -162,6 +165,7 @@ h1 {
 }
 
 .form {
+  flex-shrink: 0;
   width: 100%;
 }
 
@@ -212,7 +216,6 @@ form button {
   background-color: #aaffb8;
 }
 
-
 .to-do-list ol {
   list-style: none;
   padding: 0;
@@ -223,7 +226,7 @@ form button {
   padding: 5px;
   margin-top: 5px;
   border: 1px solid #5300d8;
-  box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.5); 
+  box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.2); 
   display: flex;
   justify-content: space-between;
 }
