@@ -4,8 +4,8 @@
       <input
         type="text"
         placeholder="Entre com uma nova tafefa..."
-        v-model="toDo"
-        ref="toDoInput"
+        v-model="task"
+        ref="taskInput"
       />
       <button type="submit">Enviar</button>
     </form>
@@ -18,25 +18,25 @@ export default {
   data() {
     return {
       errorMessage: null,
-      toDo: "",
+      task: "",
     };
   },
   methods: {
     save() {
       this.errorMessage = null;
-      if (!this.toDo) {
+      if (!this.task) {
         this.errorMessage = "Digite o texto da tarefa!";
         return;
       }
-      this.$emit("saveToDo", this.toDo);
-      this.toDo = "";
+      this.$emit("saveTask", this.task);
+      this.task = "";
     },
   },
   mounted() {
-    this.$refs.toDoInput.focus();
+    this.$refs.taskInput.focus();
   },
   updated() {
-    this.$refs.toDoInput.focus();
+    this.$refs.taskInput.focus();
   },
 };
 </script>

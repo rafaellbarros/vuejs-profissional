@@ -3,67 +3,75 @@
     <h1>Kaban</h1>
     <hr />
 
-    <Form v-on:saveToDo="save"></Form>
+    <Form v-on:saveTask="save"></Form>
 
     <div class="lists">
-      <List
-        :list="toDoList"
-        title="To Do"
-        :nextList="inProgressList"
-        @removeTask="remove"
-        @nextStage="next"
-        bgColor="#ffaaaa"
+      <Stage
+        v-for="stage in stages"
+        :key="stage.id"
+        :tasks="tasks"
+        :stage="stage.id"
+        :title="stage.title"
+        :nextStage="stage.nextStage"
+        :bgColor="stage.bgColor"
+        @removeTask="removeTask"
+        @moveStage="moveToNextStage"
       >
-      </List>
-
-      <List
-        :list="inProgressList"
-        title="In Progress"
-        :nextList="doneList"
-        @removeTask="remove"
-        @nextStage="next"
-        bgColor="#fff9aa"
-      >
-      </List>
-
-      <List
-        :list="doneList"
-        title="Done"
-        @removeTask="remove"
-        bgColor="#aaffb8"
-      >
-      </List>
+      </Stage>
     </div>
   </div>
 </template>
 
 <script>
 import Form from "./Form.vue";
-import List from "./List.vue";
+import Stage from "./Stage.vue";
 
 export default {
   components: {
     Form,
-    List,
+    Stage,
   },
   data() {
     return {
-      toDoList: [],
-      inProgressList: [],
-      doneList: [],
+      tasks: [],
+      stages: [
+        {
+          id: "toDo",
+          title: "To Do",
+          nextStage: "inProgress",
+          bgColor: "#ffaaaa",
+        },
+        {
+          id: "inProgress",
+          title: "In Progress",
+          nextStage: "testing",
+          bgColor: "#ffddaa",
+        },
+        {
+          id: "testing",
+          title: "Testing",
+          nextStage: "done",
+          bgColor: "#fff9aa",
+        },
+        {
+          id: "done",
+          title: "Done",
+          nextStage: null,
+          bgColor: "#aaffb8",
+        },
+      ],
     };
   },
   methods: {
-    save(toDo) {
-      this.toDoList.push({ text: toDo, completed: false });
+    save(task) {
+      this.tasks.push({ text: task, stage: "toDo" });
     },
-    next(toDo, from, to) {
-      to.push(toDo);
-      this.remove(toDo, from);
+    moveToNextStage(task, stage) {
+      task.stage = stage;
     },
-    remove(toDo, list) {
-      const index = list.indexOf(toDo);
-      list.splice(index, 1);
+    removeTask(task) {
+      const index = this.tasks.indexOf(task);
+      this.tasks.splice(index, 1);
     },
   },
 };

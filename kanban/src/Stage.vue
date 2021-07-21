@@ -1,15 +1,15 @@
 <template>
-  <div class="list" :style="'background-color: ' + bgColor">
+  <div class="list" :style="bgStyle">
     <h2>{{ title }}</h2>
     <div class="to-do-list">
       <ol>
-        <li v-for="td in list" :key="td.text">
-          <span class="text" :class="{ completed: td.completed }">{{
-            td.text
+        <li v-for="task in filteredTasks" :key="task.text">
+          <span class="text">{{
+            task.text
           }}</span>
           <span class="actions">
-            <button class="remove" @click="remove(td)">&#10006;</button>
-            <button class="next" v-if="nextList" @click="next(td)">&#10095;</button>
+            <button class="remove" @click="remove(task)">&#10006;</button>
+            <button class="next" v-if="nextStage" @click="move(task)">&#10095;</button>
           </span>
         </li>
       </ol>
@@ -20,25 +20,34 @@
 <script>
 export default {
   props: {
+    stage: String,
     title: String,
-    list: Array,
-    nextList: Array,
+    tasks: Array,
+    nextStage: String,
     bgColor: String,
   },
   methods: {
-    remove(td) {
-      this.$emit("removeTask", td, this.list);
+    remove(task) {
+      this.$emit("removeTask", task);
     },
-    next(td) {
-      this.$emit("nextStage", td, this.list, this.nextList);
+    move(task) {
+      this.$emit("moveStage", task, this.nextStage);
     },
   },
+  computed: {
+    filteredTasks() {
+      return this.tasks.filter(task => task.stage == this.stage)
+    },
+    bgStyle() {
+      return `background-color: ${this.bgColor}`
+    }
+  }
 };
 </script>
 
 <style>
 .list {
-  min-width: 31%;
+  min-width: 23%;
   margin: 0 1%;
   padding: 10px;
   background-color: #f0f0f0;
