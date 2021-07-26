@@ -1,0 +1,17 @@
+{
+    "extends": ["plugin:prettier/recommended", "plugin:vue/essential"],
+
+    "plugins": ["prettier"],
+
+    "rules": {
+        "prettier/prettier": "error"
+    },
+    "parserOptions": {
+        "parser": "babel-eslint",
+        "ecmaVersion": 2017,
+        "sourceType": "module",
+        "ecmaFeatures": {
+            "modules": true
+        }
+    }
+}

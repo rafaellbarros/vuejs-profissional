@@ -1,28 +1,28 @@
 <template>
-  <div id="app">
-    <main>
-      <NavMain></NavMain>
-      <router-view />
-    </main>
-    <FooterMain></FooterMain>
-  </div>
+    <div id="app">
+        <main>
+            <NavMain></NavMain>
+            <router-view />
+        </main>
+        <FooterMain></FooterMain>
+    </div>
 </template>
 
 <script>
-import FooterMain from "@/components/FooterMain.vue";
-import NavMain from "@/components/NavMain.vue";
+import FooterMain from '@/components/FooterMain.vue'
+import NavMain from '@/components/NavMain.vue'
 
 export default {
-  components: { NavMain, FooterMain },
-};
+    components: { NavMain, FooterMain },
+}
 </script>
 
 <style>
 #app {
-  min-height: 100vh;
+    min-height: 100vh;
 }
 main {
-  min-height: calc(100vh - 100px);
-  margin-bottom: 35px;
+    min-height: calc(100vh - 100px);
+    margin-bottom: 35px;
 }
 </style>
