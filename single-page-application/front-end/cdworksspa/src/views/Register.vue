@@ -135,6 +135,7 @@ export default {
                 password: null,
                 passwordConfirmation: null,
             }
+            this.errorReset()
         },
         errorReset() {
             this.error = {
@@ -170,8 +171,6 @@ export default {
                     email: this.form.email,
                     password: this.form.password,
                 }
-
-                console.log('data', data)
                 await apiPublic.post('/users', data)
                 this.$router.push('login')
             } catch (error) {
