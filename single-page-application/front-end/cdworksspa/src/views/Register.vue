@@ -100,7 +100,7 @@
 </template>
 
 <script>
-import { apiPublic } from '../services/apiServices'
+import { apiPublic } from '../services/apiService'
 
 export default {
     data: () => ({
